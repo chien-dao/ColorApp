@@ -1,0 +1,3 @@
+rootProject.name = 'ColorApp'
+
+include ':app'
