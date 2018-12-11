@@ -18,17 +18,10 @@ export default ({ navigation }) => (
       <Button
         buttonStyle={{ marginTop: 20 }}
         backgroundColor="#03A9F4"
-        title="Sign up"
+        title="Sign in"
         onPress={() => {
           navigation.navigate("App");
         }}
-      />
-      <Button
-        buttonStyle={{ marginTop: 20 }}
-        backgroundColor="transparent"
-        textStyle={{ color: "#bcbec1" }}
-        title="Sign In"
-        onPress={() => navigation.navigate("SignIn")}
       />
     </Card>
   </View>
