@@ -3,6 +3,8 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const COLORS_LOADING = 'COLORS_LOADING';
 export const COLORS_LOADED = 'COLORS_LOADED';
+export const EMAIL_CHANGED = 'EMAIL_CHANGED';
+export const PASSWORD_CHANGED = 'PASSWORD_CHANGED';
 
 export function userLoggingIn() {
   return {
@@ -10,10 +12,9 @@ export function userLoggingIn() {
   };
 }
 
-export function userLoggedIn(email, token) {
+export function userLoggedIn(token) {
   return {
-    type: USER_LOADING,
-    email,
+    type: USER_LOGIN,
     token
   };
 }
@@ -34,5 +35,19 @@ export function colorsLoaded(colors) {
   return {
     type: COLORS_LOADED,
     colors
+  };
+}
+
+export function emailChanged(email) {
+  return {
+    type: EMAIL_CHANGED,
+    email
+  };
+}
+
+export function passwordChanged(password) {
+  return {
+    type: PASSWORD_CHANGED,
+    password
   };
 }

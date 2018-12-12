@@ -3,13 +3,16 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   COLORS_LOADING,
-  COLORS_LOADED
+  COLORS_LOADED,
+  EMAIL_CHANGED,
+  PASSWORD_CHANGED
 } from '../actions';
 
 const initialState = {
   user: {
     loading: false,
     email: false,
+    password: false,
     token: false
   },
   colorApp: {
@@ -33,8 +36,23 @@ function appReducer(state = initialState, action) {
         ...state,
         user: {
           loading: false,
-          email: action.email,
           token: action.token
+        }
+      };
+    case EMAIL_CHANGED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          email: action.email
+        }
+      };
+    case PASSWORD_CHANGED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          password: action.password
         }
       };
     case USER_LOGOUT:
@@ -43,6 +61,7 @@ function appReducer(state = initialState, action) {
         user: {
           loading: false,
           email: false,
+          password: false,
           token: false
         }
       };

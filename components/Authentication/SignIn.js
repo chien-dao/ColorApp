@@ -9,34 +9,53 @@ import {
   Button,
   FormLabel
 } from "react-native-elements";
-import request from '../../request';
+import { connect } from 'react-redux';
+import {
+  emailChanged,
+  passwordChanged,
+  userLoggingIn
+} from '../../actions';
 
-export default ({ navigation, dispatch }) => {
+const SignInPage = ({ navigation, onChangeEmail, onChangePassword, onSubmit }) => {
   let email;
   let password;
   return (
     <View style={{ paddingVertical: 20 }}>
       <Card>
         <FormLabel>Email</FormLabel>
-        <TextInput placeholder="Email address..." ref={ref => this.email = ref} />
+        <TextInput
+          placeholder="Email address..."
+          ref={ref => email = ref}
+          onChangeText={onChangeEmail}
+        />
         <FormLabel>Password</FormLabel>
-        <TextInput secureTextEntry placeholder="Password..." ref={ref => this.password = ref} />
+        <TextInput
+          password
+          placeholder="Password..."
+          ref={ref => password = ref}
+          onChangeText={onChangePassword}
+        />
 
         <Button
           buttonStyle={{ marginTop: 20 }}
           backgroundColor="#03A9F4"
           title="Sign in"
-          onPress={() => {
-            request.get('/login', {
-              email: this.email.value,
-              password: this.password.value
-            }).then(data => {
-
-            })
-            navigation.navigate("App");
+          onPress={async () => {
+            await onSubmit();
+            navigation.navigate('App');
           }}
         />
       </Card>
     </View>
   )
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeEmail: (email) => dispatch(emailChanged(email)),
+    onChangePassword: (password) => dispatch(passwordChanged(password)),
+    onSubmit: () => dispatch(userLoggingIn())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SignInPage);

@@ -6,9 +6,21 @@ import {
   FormLabel,
   FormInput
 } from "react-native-elements";
+import { connect } from 'react-redux';
 
-export default ({ navigation }) => (
+const ColorScreen = ({ navigation, state }) => (
   <View style={{ paddingVertical: 20 }}>
     <Text>Color screen</Text>
+    <Text>{state.user.loading}</Text>
+    <Text>{state.user.email}</Text>
+    <Text>{state.user.password}</Text>
   </View>
 );
+
+const mapStateToProps = (state) => {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps)(ColorScreen);

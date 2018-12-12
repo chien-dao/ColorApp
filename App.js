@@ -17,6 +17,7 @@ import React from 'react';
 
 import AppNavigator from './components/App';
 import reducer from './reducers';
+import rootSaga from './sagas';
 
 const navReducer = createNavigationReducer(AppNavigator);
 const appReducer = combineReducers({
@@ -44,6 +45,8 @@ const store = createStore(
   appReducer,
   applyMiddleware(...middleware)
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default class Root extends React.Component {
   render() {
