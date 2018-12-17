@@ -23,6 +23,7 @@ export function* login() {
   const email = yield select(makeSelectEmail())
   const password = yield select(makeSelectPassword());
 
+  console.log(email, password);
   try {
     const auth = yield call(request, {
       method: 'post',

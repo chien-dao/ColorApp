@@ -1,5 +1,8 @@
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import {
+  createSwitchNavigator,
+  createAppContainer
+} from 'react-navigation';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -41,7 +44,7 @@ class LoadingScreen extends React.Component {
   }
 }
 
-export default createSwitchNavigator(
+export default createAppContainer(createSwitchNavigator(
   {
     Loading: LoadingScreen,
     App: HomeScreen,
@@ -50,4 +53,4 @@ export default createSwitchNavigator(
   {
     initialRouteName: 'Loading',
   }
-);
+));

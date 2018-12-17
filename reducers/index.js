@@ -7,8 +7,9 @@ import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED
 } from '../actions';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
   user: {
     loading: false,
     email: false,
@@ -19,68 +20,35 @@ const initialState = {
     loading: false,
     listColor: []
   }
-}
+});
 
 function appReducer(state = initialState, action) {
   switch(action.type) {
     case USER_LOADING:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          loading: true,
-        }
-      };
+      return state.setIn(['user', 'loading'], true);
     case USER_LOGIN:
-      return {
-        ...state,
-        user: {
-          loading: false,
-          token: action.token
-        }
-      };
+      return state
+              .setIn(['user', 'loading'], false)
+              .setIn(['user', 'token'], action.token);
     case EMAIL_CHANGED:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          email: action.email
-        }
-      };
+      return state
+              .setIn(['user', 'email'], action.email);
     case PASSWORD_CHANGED:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          password: action.password
-        }
-      };
+      return state
+              .setIn(['user', 'password'], action.password);
     case USER_LOGOUT:
-      return {
-        ...state,
-        user: {
-          loading: false,
-          email: false,
-          password: false,
-          token: false
-        }
-      };
+      return state
+              .setIn(['user', 'loading'], false)
+              .setIn(['user', 'email'], false)
+              .setIn(['user', 'password'], false)
+              .setIn(['user', 'token'], false);
     case COLORS_LOADING:
-      return {
-        ...state,
-        colorApp: {
-          ...state.colorApp,
-          loading: true
-        }
-      };
+      return state
+              .setIn(['colorApp', 'loading'], true);
     case COLORS_LOADED:
-      return {
-        ...state,
-        colorApp: {
-          loading: false,
-          listColor: action.colors
-        }
-      }
+      return state
+              .setIn(['colorApp', 'loading'], false)
+              .setIn(['colorApp', 'listColor'], action.colors);
     default:
       return state;
   }

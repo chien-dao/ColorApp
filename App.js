@@ -4,8 +4,8 @@ import {
 import {
   createStore,
   applyMiddleware,
-  combineReducers,
 } from 'redux';
+import { combineReducers } from 'redux-immutable';
 import {
   reduxifyNavigator,
   createReactNavigationReduxMiddleware,
@@ -18,41 +18,47 @@ import React from 'react';
 import AppNavigator from './components/App';
 import reducer from './reducers';
 import rootSaga from './sagas';
+import { fromJS } from 'immutable';
 
-const navReducer = createNavigationReducer(AppNavigator);
+const initialState = fromJS({
+  app: {}
+});
+
+// const navReducer = createNavigationReducer(AppNavigator);
 const appReducer = combineReducers({
-  nav: navReducer,
+  // nav: navReducer,
   app: reducer
 });
 const sagaMiddleware = createSagaMiddleware();
 
 // Note: createReactNavigationReduxMiddleware must be run before reduxifyNavigator
 const middleware = [
-  createReactNavigationReduxMiddleware(
-    "root",
-    state => state.nav
-  ),
+  // createReactNavigationReduxMiddleware(
+  //   "root",
+  //   state => state.nav
+  // ),
   sagaMiddleware
 ]
 
-const App = reduxifyNavigator(AppNavigator, "root");
-const mapStateToProps = (state) => ({
-  state: state.nav,
-});
-const AppWithNavigationState = connect(mapStateToProps)(App);
+// const App = reduxifyNavigator(AppNavigator, "root");
+// const mapStateToProps = (state) => ({
+//   state: state.nav,
+// });
+// const AppWithNavigationState = connect(mapStateToProps)(App);
 
 const store = createStore(
   appReducer,
-  applyMiddleware(...middleware)
+  initialState,
+  applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(rootSaga);
-
-export default class Root extends React.Component {
+type Props = {};
+export default class Root extends React.Component<Props> {
   render() {
     return (
       <Provider store={store}>
-        <AppWithNavigationState />
+        <AppNavigator />
       </Provider>
     );
   }

@@ -15,10 +15,14 @@ import {
   passwordChanged,
   userLoggingIn
 } from '../../actions';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectPassword, makeSelectEmail } from '../../sagas/selector';
 
-const SignInPage = ({ navigation, onChangeEmail, onChangePassword, onSubmit }) => {
+const SignInPage = ({ navigation, onChangeEmail, onChangePassword, onSubmit, emailVal, passwordVal }) => {
   let email;
   let password;
+  console.log('email', emailVal);
+  console.log('password', passwordVal);
   return (
     <View style={{ paddingVertical: 20 }}>
       <Card>
@@ -56,6 +60,11 @@ const mapDispatchToProps = (dispatch) => {
     onChangePassword: (password) => dispatch(passwordChanged(password)),
     onSubmit: () => dispatch(userLoggingIn())
   }
-}
+};
 
-export default connect(null, mapDispatchToProps)(SignInPage);
+const mapStateToProps = createStructuredSelector({
+  email: makeSelectEmail(),
+  password: makeSelectPassword(),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);

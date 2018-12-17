@@ -7,20 +7,41 @@ import {
   FormInput
 } from "react-native-elements";
 import { connect } from 'react-redux';
+import {
+  makeSelectPassword,
+  makeSelectEmail
+} from '../../sagas/selector';
+import { createStructuredSelector } from 'reselect';
 
-const ColorScreen = ({ navigation, state }) => (
-  <View style={{ paddingVertical: 20 }}>
-    <Text>Color screen</Text>
-    <Text>{state.user.loading}</Text>
-    <Text>{state.user.email}</Text>
-    <Text>{state.user.password}</Text>
-  </View>
-);
+// class ColorScreen extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     console.log(this.props);
+//   }
 
-const mapStateToProps = (state) => {
-  return {
-    state
-  }
-}
+//   render() {
+//     console.log(this.props);
+//     return (
+//       <View style={{ paddingVertical: 20 }}>
+//         <Text>Color screen</Text>
+//         <Text>{this.props.email}</Text>
+//       </View>
+//     );
+//   }
+// }
+
+const ColorScreen = ({ navigation, email }) => {
+  console.log(email);
+  return (
+    <View style={{ paddingVertical: 20 }}>
+      <Text>Color screen</Text>
+      <Text>{email}</Text>
+    </View>
+  )
+};
+
+const mapStateToProps = createStructuredSelector({
+  email: makeSelectEmail(),
+});
 
 export default connect(mapStateToProps)(ColorScreen);
