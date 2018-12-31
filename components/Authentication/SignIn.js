@@ -44,10 +44,7 @@ const SignInPage = ({ navigation, onChangeEmail, onChangePassword, onSubmit, ema
           buttonStyle={{ marginTop: 20 }}
           backgroundColor="#03A9F4"
           title="Sign in"
-          onPress={async () => {
-            await onSubmit();
-            navigation.navigate('App');
-          }}
+          onPress={onSubmit}
         />
       </Card>
     </View>

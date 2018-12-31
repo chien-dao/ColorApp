@@ -10,7 +10,8 @@ import {
   call,
   takeLatest,
   put,
-  all
+  all,
+  select
 } from 'redux-saga/effects';
 import request from '../request';
 import {
@@ -18,6 +19,7 @@ import {
   makeSelectPassword
 } from './selector';
 import { AsyncStorage } from 'react-native';
+import {NavigationActions} from 'react-navigation';
 
 export function* login() {
   const email = yield select(makeSelectEmail())
@@ -35,6 +37,7 @@ export function* login() {
     });
     AsyncStorage.setItem('userToken', auth.token);
     yield put(userLoggedIn(auth.token));
+    yield put(NavigationActions.navigate({ routerName: 'App' }));
   } catch(err) {
     alert(err);
   }
@@ -45,7 +48,7 @@ export function* watchLogin() {
 }
 
 export default function* rootSaga() {
-  yield all[
+  yield all([
     watchLogin()
-  ]
+  ])
 }

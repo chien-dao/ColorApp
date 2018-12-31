@@ -2,17 +2,11 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('app');
 
-const selectUser = () => createSelector(
-  selectGlobal,
-  (state) => state.get('user')
-);
+const selectUser = (state) => selectGlobal(state).get('user')
 
 const makeSelectEmail = () => createSelector(
   selectUser,
-  (userState) => {
-    console.log(selectUser);
-    userState.get('email');
-  }
+  (userState) => userState.get('email')
 );
 
 const makeSelectPassword = () => createSelector(

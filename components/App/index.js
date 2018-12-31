@@ -12,20 +12,10 @@ import {
 import AuthScreen from '../Authentication';
 import HomeScreen from '../ColorScreen';
 
-// const LoadingScreen = async ({ navigation }) => {
-//   const userToken = await AsyncStorage.getItem('userToken');
-//   navigation.navigate(userToken ? 'App' : 'Auth');
-//   return (
-//     <View style={styles.container}>
-//       <ActivityIndicator />
-//       <StatusBar barStyle="default" />
-//     </View>
-//   );
-// }
-
 class LoadingScreen extends React.Component {
   constructor(props) {
     super(props);
+    console.log('WTF');
     this._bootstrapAsync();
   }
 

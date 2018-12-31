@@ -1,8 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  AsyncStorage,
+  NavigationActions,
+} from 'react-native';
 import {
   Card,
-  Button,
   FormLabel,
   FormInput
 } from "react-native-elements";
@@ -12,36 +17,35 @@ import {
   makeSelectEmail
 } from '../../sagas/selector';
 import { createStructuredSelector } from 'reselect';
+import { userLogOut } from '../../actions';
 
-// class ColorScreen extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     console.log(this.props);
-//   }
-
-//   render() {
-//     console.log(this.props);
-//     return (
-//       <View style={{ paddingVertical: 20 }}>
-//         <Text>Color screen</Text>
-//         <Text>{this.props.email}</Text>
-//       </View>
-//     );
-//   }
-// }
-
-const ColorScreen = ({ navigation, email }) => {
-  console.log(email);
+const ColorScreen = ({ navigation, email, password, onSignOut }) => {
+  console.log(email, password);
   return (
     <View style={{ paddingVertical: 20 }}>
       <Text>Color screen</Text>
       <Text>{email}</Text>
+      <Button
+        buttonStyle={{ marginTop: 20 }}
+        backgroundColor="#03A9F4"
+        title="Sign out"
+        onPress={onSignOut}
+      />
     </View>
   )
 };
 
 const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
+  password: makeSelectPassword(),
 });
 
-export default connect(mapStateToProps)(ColorScreen);
+const mapDispatchToProps = (dispatch) => ({
+  onSignOut: () => {
+    AsyncStorage.removeItem('userToken');
+    NavigationActions.navigate({ routerName: 'Auth' });
+    dispatch(userLogOut());
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColorScreen);
